@@ -4,16 +4,28 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Lazej DJ Meham</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
   <div class="overlay">
     <h1>Lazej DJ Meham</h1>
-    <p>Feel the Beat, Rule the Night 🔥</p>
+    <p>Feel the Beat, Rule the Night <span class="fire-emoji">🔥</span></p>
 
-    <div class="video-rotator">
-      <video class="dj-video" autoplay muted loop></video>
+    <div class="video-slider-container">
+      <div class="video-wrapper">
+        </div>
+      <div class="slider-nav">
+        <button class="nav-button prev-button">❮</button>
+        <button class="nav-button next-button">❯</button>
+      </div>
+    </div>
+
+    <div class="booking-section">
+        <h2>Ready to Light Up Your Event?</h2>
+        <p>Book Lazej DJ Meham for an unforgettable experience!</p>
+        <a href="https://wa.me/917988034346" target="_blank" class="booking-button">Book Now!</a>
     </div>
 
     <div class="buttons">
@@ -29,17 +41,77 @@
       "https://i.imgur.com/FZaxya2.mp4"
     ];
 
-    const videoElement = document.querySelector('.dj-video');
-    let currentVideo = 0;
+    const videoWrapper = document.querySelector('.video-wrapper');
+    const prevButton = document.querySelector('.prev-button');
+    const nextButton = document.querySelector('.next-button');
+    let currentVideoIndex = 0; // Changed from currentVideo for clarity
 
-    function playNextVideo() {
-      videoElement.src = videoLinks[currentVideo];
-      videoElement.play();
-      currentVideo = (currentVideo + 1) % videoLinks.length;
+    // Create video elements dynamically
+    videoLinks.forEach(link => {
+      const videoSlide = document.createElement('div');
+      videoSlide.classList.add('dj-video-slide');
+      const videoElement = document.createElement('video');
+      videoElement.src = link;
+      videoElement.autoplay = false; // Initially set to false
+      videoElement.muted = true;
+      videoElement.loop = true;
+      videoElement.playsInline = true; // For mobile autoplay
+      videoSlide.appendChild(videoElement);
+      videoWrapper.appendChild(videoSlide);
+    });
+
+    const videoSlides = document.querySelectorAll('.dj-video-slide');
+    const videos = document.querySelectorAll('.dj-video'); // Get all video elements
+
+    function showVideo(index) {
+        // Stop all videos first
+        videos.forEach(vid => vid.pause());
+
+        // Update wrapper transform to show the correct video
+        videoWrapper.style.transform = `translateX(-${index * 100}%)`;
+
+        // Play the current video
+        videos[index].play();
+        currentVideoIndex = index;
     }
 
-    videoElement.addEventListener('ended', playNextVideo);
-    playNextVideo();
+    // Initialize the first video
+    showVideo(currentVideoIndex);
+
+    prevButton.addEventListener('click', () => {
+      currentVideoIndex = (currentVideoIndex - 1 + videoLinks.length) % videoLinks.length;
+      showVideo(currentVideoIndex);
+    });
+
+    nextButton.addEventListener('click', () => {
+      currentVideoIndex = (currentVideoIndex + 1) % videoLinks.length;
+      showVideo(currentVideoIndex);
+    });
+
+    // Optional: Auto-slide functionality (uncomment to enable)
+    // setInterval(() => {
+    //   nextButton.click();
+    // }, 5000); // Change video every 5 seconds
+
+
+    // Optional: Swipe functionality for touch devices
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    videoWrapper.addEventListener('touchstart', e => {
+        touchStartX = e.touches[0].clientX;
+    });
+
+    videoWrapper.addEventListener('touchend', e => {
+        touchEndX = e.changedTouches[0].clientX;
+        if (touchEndX < touchStartX - 50) { // Swiped left
+            nextButton.click();
+        }
+        if (touchEndX > touchStartX + 50) { // Swiped right
+            prevButton.click();
+        }
+    });
+
   </script>
 
 </body>
