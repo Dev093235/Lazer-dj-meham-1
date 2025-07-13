@@ -36,65 +36,74 @@
 
   <script>
     const videoLinks = [
-      "https://i.imgur.com/pdjsnlS.mp4",
-      "https://i.imgur.com/6hhyznI.mp4",
-      "https://i.imgur.com/FZaxya2.mp4"
+      "https://i.imgur.com/pdjsnlS.mp4", // वीडियो लिंक 1
+      "https://i.imgur.com/6hhyznI.mp4",  // वीडियो लिंक 2
+      "https://i.imgur.com/FZaxya2.mp4"   // वीडियो लिंक 3
     ];
 
     const videoWrapper = document.querySelector('.video-wrapper');
     const prevButton = document.querySelector('.prev-button');
     const nextButton = document.querySelector('.next-button');
-    let currentVideoIndex = 0; // Changed from currentVideo for clarity
+    let currentVideoIndex = 0;
 
-    // Create video elements dynamically
+    // यह कोड वीडियो एलिमेंट्स बनाता है और उन्हें पेज पर जोड़ता है
     videoLinks.forEach(link => {
       const videoSlide = document.createElement('div');
       videoSlide.classList.add('dj-video-slide');
       const videoElement = document.createElement('video');
       videoElement.src = link;
-      videoElement.autoplay = false; // Initially set to false
-      videoElement.muted = true;
-      videoElement.loop = true;
-      videoElement.playsInline = true; // For mobile autoplay
+      videoElement.autoplay = false; // वीडियो अपने आप नहीं चलेगा जब तक यूजर क्लिक न करे
+      videoElement.muted = true; // वीडियो म्यूट रहेगा
+      videoElement.loop = true; // वीडियो खत्म होने पर फिर से चलेगा
+      videoElement.playsInline = true; // मोबाइल पर भी पेज के अंदर ही चलेगा
       videoSlide.appendChild(videoElement);
       videoWrapper.appendChild(videoSlide);
     });
 
     const videoSlides = document.querySelectorAll('.dj-video-slide');
-    const videos = document.querySelectorAll('.dj-video'); // Get all video elements
+    const videos = document.querySelectorAll('.dj-video'); // सारे वीडियो एलिमेंट्स को सेलेक्ट करता है
 
+    // यह फंक्शन सही वीडियो को दिखाता है और उसे प्ले करता है
     function showVideo(index) {
-        // Stop all videos first
-        videos.forEach(vid => vid.pause());
+        // पहले सारे वीडियो को रोकें और उन्हें शुरू से चलाएं
+        videos.forEach(vid => {
+            vid.pause();
+            vid.currentTime = 0; // वीडियो को शुरू में रीसेट करें
+        });
 
-        // Update wrapper transform to show the correct video
+        // वीडियो-रैपर को सही वीडियो पर स्लाइड करें
         videoWrapper.style.transform = `translateX(-${index * 100}%)`;
 
-        // Play the current video
-        videos[index].play();
+        // करंट वीडियो को चलाने की कोशिश करें (अगर ब्राउज़र अनुमति देता है)
+        videos[index].play().catch(error => {
+            console.log("वीडियो अपने आप नहीं चल पाया:", error);
+            // यहाँ आप यूजर को वीडियो पर क्लिक करने के लिए कह सकते हैं
+        });
         currentVideoIndex = index;
     }
 
-    // Initialize the first video
+    // पेज लोड होने पर पहला वीडियो दिखाएं
     showVideo(currentVideoIndex);
 
+    // पिछले वीडियो पर जाने का बटन
     prevButton.addEventListener('click', () => {
       currentVideoIndex = (currentVideoIndex - 1 + videoLinks.length) % videoLinks.length;
       showVideo(currentVideoIndex);
     });
 
+    // अगले वीडियो पर जाने का बटन
     nextButton.addEventListener('click', () => {
       currentVideoIndex = (currentVideoIndex + 1) % videoLinks.length;
       showVideo(currentVideoIndex);
     });
 
-    // Optional: Auto-slide functionality (uncomment to enable)
+    // (वैकल्पिक) अगर आप चाहते हैं कि वीडियो अपने आप स्लाइड हों, तो नीचे की लाइनों को 'अनकमेंट' करें (// हटा दें)
     // setInterval(() => {
     //   nextButton.click();
-    // }, 5000); // Change video every 5 seconds
+    // }, 5000); // हर 5 सेकंड में वीडियो बदलें
 
 
-    // Optional: Swipe functionality for touch devices
+    // (वैकल्पिक) टच डिवाइस के लिए स्वाइप करने की क्षमता
     let touchStartX = 0;
     let touchEndX = 0;
 
@@ -104,10 +113,10 @@
 
     videoWrapper.addEventListener('touchend', e => {
         touchEndX = e.changedTouches[0].clientX;
-        if (touchEndX < touchStartX - 50) { // Swiped left
+        if (touchEndX < touchStartX - 50) { // बाएं स्वाइप किया
             nextButton.click();
         }
-        if (touchEndX > touchStartX + 50) { // Swiped right
+        if (touchEndX > touchStartX + 50) { // दाएं स्वाइप किया
             prevButton.click();
         }
     });
