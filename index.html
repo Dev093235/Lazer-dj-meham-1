@@ -7,6 +7,53 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* नए सोशल मीडिया बटन के लिए स्टाइल */
+    .social-links {
+      margin-top: 30px; /* ऊपर से थोड़ी जगह */
+      display: flex;
+      flex-direction: column; /* बटन एक के नीचे एक */
+      gap: 15px; /* बटनों के बीच की दूरी */
+      align-items: center; /* सेंटर में अलाइन करें */
+      width: 100%;
+      max-width: 300px; /* बटनों की अधिकतम चौड़ाई */
+    }
+
+    .social-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 25px;
+      border-radius: 30px; /* गोल कोने */
+      font-size: 1.1em;
+      font-weight: 600;
+      text-decoration: none;
+      color: white;
+      transition: all 0.3s ease;
+      width: 100%; /* पूरी चौड़ाई लें */
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* हल्का शैडो */
+    }
+
+    .social-button i {
+      margin-right: 10px; /* आइकन और टेक्स्ट के बीच की दूरी */
+      font-size: 1.3em;
+    }
+
+    .social-button.youtube {
+      background: linear-gradient(45deg, #FF0000, #CC0000); /* YouTube लाल */
+      border: 2px solid #FF0000;
+    }
+
+    .social-button.instagram {
+      background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); /* Instagram ग्रेडिएंट */
+      border: 2px solid #dc2743;
+    }
+
+    .social-button:hover {
+      transform: translateY(-3px); /* होवर पर थोड़ा ऊपर उठें */
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+    }
+  </style>
 </head>
 <body>
 
@@ -14,13 +61,13 @@
     <h1>Lazej DJ Meham</h1>
     <p>Feel the Beat, Rule the Night <span class="fire-emoji">🔥</span></p>
 
-    <div class="video-slider-container">
-      <div class="video-wrapper">
-        </div>
-      <div class="slider-nav">
-        <button class="nav-button prev-button">❮</button>
-        <button class="nav-button next-button">❯</button>
-      </div>
+    <div class="social-links">
+      <a href="Https://youtube.com/@lazerdj4980?si=RjlDvZ9h3rsEkfJ0" target="_blank" class="social-button youtube">
+        <i class="fab fa-youtube"></i> YouTube Channel
+      </a>
+      <a href="https://www.instagram.com/lazerdjmeham?igsh=bGduZ2I2aXRiMnU4" target="_blank" class="social-button instagram">
+        <i class="fab fa-instagram"></i> Instagram Profile
+      </a>
     </div>
 
     <div class="booking-section">
@@ -36,151 +83,8 @@
   </div>
 
   <script>
-    const videoLinks = [
-      "VID_20250713_082914_149.mp4", // आपके GitHub पर अपलोड किए गए वीडियो के नाम
-      "VID_20250713_083117__898.mp4",
-      "VID_20250713_083405_847.mp4"
-    ];
-
-    const videoWrapper = document.querySelector('.video-wrapper');
-    const prevButton = document.querySelector('.prev-button');
-    const nextButton = document.querySelector('.next-button');
-    let currentVideoIndex = 0;
-
-    videoLinks.forEach(link => {
-      const videoSlide = document.createElement('div');
-      videoSlide.classList.add('dj-video-slide');
-
-      const videoElement = document.createElement('video');
-      videoElement.src = link;
-      videoElement.autoplay = false; // अब autoplay false रहेगा, यूजर मैन्युअल रूप से चलाएगा
-      videoElement.muted = true;   // वीडियो शुरू में म्यूट रहेगा
-      videoElement.loop = true;
-      videoElement.playsInline = true; // मोबाइल पर भी पेज के अंदर ही चलेगा
-      videoElement.controls = false; // डिफॉल्ट ब्राउज़र कंट्रोल्स हटा दें, हम कस्टम प्ले बटन बनाएंगे
-
-      const playButton = document.createElement('button');
-      playButton.classList.add('play-button');
-      playButton.innerHTML = '<i class="fas fa-play"></i>'; // Font Awesome प्ले आइकन
-
-      const volumeButton = document.createElement('button');
-      volumeButton.classList.add('volume-button');
-      volumeButton.innerHTML = '<i class="fas fa-volume-mute"></i>'; // म्यूट आइकन
-
-      videoSlide.appendChild(videoElement);
-      videoSlide.appendChild(playButton);
-      videoSlide.appendChild(volumeButton);
-      videoWrapper.appendChild(videoSlide);
-
-      // प्ले बटन पर क्लिक हैंडलर
-      playButton.addEventListener('click', () => {
-        if (videoElement.paused) {
-          videoElement.play();
-          playButton.innerHTML = '<i class="fas fa-pause"></i>'; // प्ले होने पर पॉज़ आइकन
-          // अगर यूजर प्ले करता है, तो वॉल्यूम बटन पर भी क्लिक करके अनम्यूट कर सकता है
-          // यहाँ हम वॉल्यूम को अनम्यूट नहीं कर रहे हैं, ताकि यूजर को पूरा नियंत्रण मिले
-        } else {
-          videoElement.pause();
-          playButton.innerHTML = '<i class="fas fa-play"></i>'; // पॉज़ होने पर प्ले आइकन
-        }
-      });
-
-      // वॉल्यूम बटन पर क्लिक हैंडलर
-      volumeButton.addEventListener('click', () => {
-        if (videoElement.muted) {
-          videoElement.muted = false;
-          volumeButton.innerHTML = '<i class="fas fa-volume-up"></i>'; // अनम्यूट आइकन
-        } else {
-          videoElement.muted = true;
-          volumeButton.innerHTML = '<i class="fas fa-volume-mute"></i>'; // म्यूट आइकन
-        }
-      });
-
-      // वीडियो प्ले होने/पॉज होने पर प्ले बटन आइकन अपडेट करें
-      videoElement.addEventListener('play', () => {
-          playButton.innerHTML = '<i class="fas fa-pause"></i>';
-          playButton.style.display = 'none'; // वीडियो चलने पर प्ले बटन छुपाएं
-      });
-      videoElement.addEventListener('pause', () => {
-          playButton.innerHTML = '<i class="fas fa-play"></i>';
-          playButton.style.display = 'block'; // वीडियो पॉज़ होने पर प्ले बटन दिखाएं
-      });
-      videoElement.addEventListener('ended', () => { // वीडियो खत्म होने पर
-          playButton.innerHTML = '<i class="fas fa-play"></i>';
-          playButton.style.display = 'block';
-      });
-    });
-
-    const videoSlides = document.querySelectorAll('.dj-video-slide');
-    const videos = document.querySelectorAll('.dj-video-slide video'); // सारे वीडियो एलिमेंट्स को सेलेक्ट करता है
-    const playButtons = document.querySelectorAll('.play-button');
-    const volumeButtons = document.querySelectorAll('.volume-button');
-
-
-    function showVideo(index) {
-        // पहले सारे वीडियो को रोकें, उन्हें शुरू से करें और प्ले/वॉल्यूम बटन को रीसेट करें
-        videos.forEach((vid, idx) => {
-            vid.pause();
-            vid.currentTime = 0;
-            vid.muted = true; // हमेशा म्यूटेड शुरू करें
-            volumeButtons[idx].innerHTML = '<i class="fas fa-volume-mute"></i>'; // म्यूट आइकन
-            playButtons[idx].innerHTML = '<i class="fas fa-play"></i>'; // प्ले आइकन
-            
-            // सिर्फ करंट वीडियो के प्ले/वॉल्यूम बटन दिखाएं
-            if (idx === index) {
-                playButtons[idx].style.display = 'block';
-                volumeButtons[idx].style.display = 'flex'; // flex ताकि icon बीच में आए
-            } else {
-                playButtons[idx].style.display = 'none';
-                volumeButtons[idx].style.display = 'none';
-            }
-        });
-
-        // वीडियो-रैpper को सही वीडियो पर स्लाइड करें
-        videoWrapper.style.transform = `translateX(-${index * 100}%)`;
-
-        currentVideoIndex = index;
-    }
-
-    // पेज लोड होने पर पहला वीडियो दिखाएं
-    showVideo(currentVideoIndex);
-
-    // पिछले वीडियो पर जाने का बटन
-    prevButton.addEventListener('click', () => {
-      currentVideoIndex = (currentVideoIndex - 1 + videoLinks.length) % videoLinks.length;
-      showVideo(currentVideoIndex);
-    });
-
-    // अगले वीडियो पर जाने का बटन
-    nextButton.addEventListener('click', () => {
-      currentVideoIndex = (currentVideoIndex + 1) % videoLinks.length;
-      showVideo(currentVideoIndex);
-    });
-
-    // (वैकल्पिक) अगर आप चाहते हैं कि वीडियो अपने आप स्लाइड हों, तो नीचे की लाइनों को 'अनकमेंट' करें (// हटा दें)
-    // setInterval(() => {
-    //   nextButton.click();
-    // }, 5000); // हर 5 सेकंड में वीडियो बदलें
-
-
-    // (वैकल्पिक) टच डिवाइस के लिए स्वाइप करने की क्षमता
-    let touchStartX = 0;
-    let touchEndX = 0;
-
-    videoWrapper.addEventListener('touchstart', e => {
-        touchStartX = e.touches[0].clientX;
-    });
-
-    videoWrapper.addEventListener('touchend', e => {
-        touchEndX = e.changedTouches[0].clientX;
-        if (touchEndX < touchStartX - 50) { // बाएं स्वाइप किया
-            nextButton.click();
-        }
-        if (touchEndX > touchStartX + 50) { // दाएं स्वाइप किया
-            prevButton.click();
-        }
-    });
-
+    // अब यहाँ कोई वीडियो स्लाइडर JavaScript नहीं है
+    // अगर आपके पास कोई अन्य JavaScript है जो वीडियो से संबंधित नहीं है, तो उसे यहाँ रख सकते हैं
   </script>
 
 </body>
