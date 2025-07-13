@@ -30,15 +30,15 @@ body::before {
   background-size: cover; /* इमेज को पूरी तरह कवर करें */
   background-position: center; /* इमेज को बीच में रखें */
   background-repeat: no-repeat; /* इमेज को दोहराएं नहीं */
-  /* यहाँ बदलाव किया गया है: blur हटा दिया गया है */
-  filter: brightness(0.7); /* इमेज को थोड़ा डार्क रखें, लेकिन अब धुंधला नहीं है */
+  /* यहाँ बदलाव किया गया है: filter पूरी तरह हटा दिया गया है */
+  /* अब इमेज बिलकुल साफ दिखेगी */
   z-index: -1; /* इमेज को बाकी सामग्री के पीछे रखें */
 }
 
 /* सामग्री के लिए ओवरले (कंटेंट बॉक्स) */
 .overlay {
-  /* यहाँ बदलाव किया गया है: background को और अपारदर्शी बनाया गया है (0.95) */
-  background: rgba(0, 0, 0, 0.95); /* गहरा, लगभग पूरी तरह अपारदर्शी बैकग्राउंड */
+  /* यहाँ बदलाव किया गया है: background को पूरी तरह ट्रांसपेरेंट बनाया गया है */
+  background: transparent; /* अब काला बॉक्स पूरी तरह पारदर्शी है */
   min-height: 100vh; /* सुनिश्चित करें कि यह पूरी ऊंचाई कवर करे */
   display: flex;
   flex-direction: column; /* एलिमेंट्स को एक के नीचे एक रखें */
@@ -50,31 +50,34 @@ body::before {
   width: 550px; /* एक निश्चित अधिकतम चौड़ाई */
   margin: 0 auto; /* केंद्र में रखें */
   border-radius: 15px; /* गोल कोने */
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8); /* गहरा छाया प्रभाव */
+  /* बॉक्स शैडो को हल्का किया गया है ताकि ओवरले दिखे */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); /* हल्का छाया प्रभाव */
   position: relative;
   z-index: 1; /* यह सुनिश्चित करता है कि ओवरले बैकग्राउंड के ऊपर रहे */
   gap: 25px; /* तत्वों के बीच की दूरी */
 }
 
-/* हेडिंग (H1) */
+/* हेडिंग (H1) - टेक्स्ट अब पीछे की साफ इमेज पर दिखेगा, इसलिए टेक्स्ट का रंग और शैडो बनाए रखा है */
 h1 {
   font-size: 3.5em; /* बड़ा फॉन्ट आकार */
   color: #ffcc00; /* गोल्डन/पीला रंग DJ थीम के लिए */
   margin-bottom: 5px;
-  text-shadow: 0 0 15px rgba(255, 204, 0, 0.7), 0 0 25px rgba(255, 204, 0, 0.5); /* चमक वाला टेक्स्ट */
+  text-shadow: 0 0 15px rgba(0, 0, 0, 0.8), 0 0 25px rgba(0, 0, 0, 0.6); /* टेक्स्ट पर गहरा शैडो ताकि साफ दिखे */
   letter-spacing: 2px; /* अक्षरों के बीच जगह */
   font-weight: 700; /* बोल्ड फॉन्ट */
 }
 
-/* पैराग्राफ (P) */
+/* पैराग्राफ (P) - टेक्स्ट अब पीछे की साफ इमेज पर दिखेगा, इसलिए टेक्स्ट का रंग और शैडो बनाए रखा है */
 p {
   font-size: 1.6em;
   margin-top: 0;
   margin-bottom: 25px;
-  color: #e0e0e0;
+  color: #ffffff; /* सफेद टेक्स्ट */
+  text-shadow: 0 0 8px rgba(0, 0, 0, 0.7); /* टेक्स्ट पर गहरा शैडो ताकि साफ दिखे */
   font-weight: 300;
   line-height: 1.4;
 }
+
 
 /* फायर इमोजी एनिमेशन */
 .fire-emoji {
@@ -113,7 +116,7 @@ p {
   color: white;
   transition: all 0.3s ease;
   width: 100%; /* पूरी चौड़ाई लें */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* हल्का शैडो */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* शैडो को थोड़ा गहरा किया गया ताकि बटन स्पष्ट दिखें */
 }
 
 .social-button i {
@@ -133,7 +136,7 @@ p {
 
 .social-button:hover {
   transform: translateY(-3px); /* होवर पर थोड़ा ऊपर उठें */
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
 }
 /* ---------------------------------------------------- */
 
@@ -159,7 +162,7 @@ a.whatsapp, a.call {
   font-weight: bold;
   font-size: 1.3em;
   transition: all 0.3s ease; /* स्मूथ एनिमेशन */
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6); /* शैडो को गहरा किया गया */
   width: 85%;
   max-width: 380px; /* अधिकतम चौड़ाई */
 }
@@ -170,7 +173,7 @@ a.whatsapp {
 
 a.whatsapp:hover {
   transform: translateY(-5px) scale(1.02); /* हॉवर पर थोड़ा ऊपर उठें और बड़े हों */
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
   background: linear-gradient(45deg, #1DA851, #25D366);
 }
 
@@ -180,28 +183,30 @@ a.call {
 
 a.call:hover {
   transform: translateY(-5px) scale(1.02);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
   background: linear-gradient(45deg, #cc003f, #ff004f);
 }
 
 /* बुकिंग सेक्शन (नया) */
 .booking-section {
     margin-top: 40px;
-    background-color: rgba(255, 255, 255, 0.15); /* हल्का पारदर्शी बैकग्राउंड */
+    /* यहाँ background को हल्का पारदर्शी रखा है ताकि यह थोड़ा अलग दिखे,
+       लेकिन आप इसे भी 'transparent' कर सकते हैं अगर आप चाहें */
+    background-color: rgba(255, 255, 255, 0.05); /* बहुत हल्का पारदर्शी सफेद */
     padding: 35px;
     border-radius: 15px;
     width: 100%;
     max-width: 500px;
-    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(8px); /* बैकग्राउंड को और धुंधला करने के लिए */
-    border: 1px solid rgba(255, 255, 255, 0.2); /* हल्की सफेद बॉर्डर */
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.3); /* गहरा शैडो */
+    backdrop-filter: blur(5px); /* थोड़ा धुंधला प्रभाव ताकि टेक्स्ट साफ दिखे */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* हल्की सफेद बॉर्डर */
 }
 
 .booking-section h2 {
     color: #ffcc00; /* गोल्डन रंग */
     font-size: 2.5em;
     margin-bottom: 15px;
-    text-shadow: 0 0 12px rgba(255, 204, 0, 0.6);
+    text-shadow: 0 0 12px rgba(0, 0, 0, 0.6); /* गहरा टेक्स्ट शैडो */
     font-weight: 700;
 }
 
@@ -209,6 +214,7 @@ a.call:hover {
     font-size: 1.2em;
     margin-bottom: 30px;
     color: #f5f5f5;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* गहरा टेक्स्ट शैडो */
     font-weight: 400;
 }
 
@@ -221,7 +227,7 @@ a.call:hover {
     text-decoration: none;
     font-weight: bold;
     font-size: 1.4em;
-    box-shadow: 0 8px 25px rgba(255, 69, 0, 0.6);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6); /* शैडो को गहरा किया गया */
     transition: all 0.3s ease;
     text-transform: uppercase; /* टेक्स्ट को अपरकेस करें */
     letter-spacing: 1px;
@@ -229,7 +235,7 @@ a.call:hover {
 
 .booking-button:hover {
     transform: scale(1.05) translateY(-7px);
-    box-shadow: 0 12px 35px rgba(255, 69, 0, 0.8);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.8);
     background: linear-gradient(45deg, #ff8c00, #ff4500);
 }
 
