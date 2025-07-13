@@ -86,128 +86,59 @@ p {
     to { transform: translateY(-5px); }
 }
 
-/* वीडियो स्लाइडर कंटेनर */
-.video-slider-container {
-  width: 100%;
-  max-width: 500px; /* अधिकतम चौड़ाई */
-  position: relative;
-  overflow: hidden; /* वीडियो को कंटेनर से बाहर न जाने दें */
-  border-radius: 15px; /* गोल कोने */
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.7); /* छाया प्रभाव */
-  aspect-ratio: 16 / 9; /* वीडियो के लिए मानक अनुपात (चौड़ाई:ऊंचाई) */
-  margin-bottom: 20px;
-  background-color: black; /* वीडियो लोड होने तक काला बैकग्राउंड */
-}
-
-/* वीडियो को होल्ड करने वाला रैपर (स्लाइडिंग के लिए) */
-.video-wrapper {
-    display: flex; /* वीडियो को एक लाइन में रखें */
-    transition: transform 0.5s ease-in-out; /* स्लाइडिंग एनिमेशन को स्मूथ बनाएं */
-    height: 100%;
-}
-
-/* प्रत्येक वीडियो स्लाइड */
-.dj-video-slide {
-    min-width: 100%; /* हर स्लाइड पूरी चौड़ाई ले */
-    height: 100%;
-    object-fit: cover; /* वीडियो को कंटेनर में फिट करें */
-    display: flex; /* वीडियो को सेंट्रलाइज करने के लिए */
-    justify-content: center;
-    align-items: center;
-    position: relative; /* प्ले और वॉल्यूम बटन के लिए */
-}
-
-/* असली वीडियो टैग */
-.dj-video-slide video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block; /* ब्लॉक डिस्प्ले सुनिश्चित करें */
-}
-
-/* प्ले बटन स्टाइलिंग */
-.play-button {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: rgba(255, 255, 255, 0.3); /* हल्का पारदर्शी सफेद */
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 70px;
-  height: 70px;
-  font-size: 2.5em;
+/* ---------------------------------------------------- */
+/* नए सोशल मीडिया बटन के लिए स्टाइल - यहाँ से शुरू */
+/* ---------------------------------------------------- */
+.social-links {
+  margin-top: 30px; /* ऊपर से थोड़ी जगह */
   display: flex;
-  justify-content: center;
+  flex-direction: column; /* बटन एक के नीचे एक */
+  gap: 15px; /* बटनों के बीच की दूरी */
+  align-items: center; /* सेंटर में अलाइन करें */
+  width: 100%;
+  max-width: 300px; /* बटनों की अधिकतम चौड़ाई */
+}
+
+.social-button {
+  display: flex;
   align-items: center;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-  z-index: 5; /* वीडियो के ऊपर रहें */
-  backdrop-filter: blur(5px); /* धुंधला प्रभाव */
-}
-
-.play-button:hover {
-  background-color: rgba(255, 255, 255, 0.5);
-  transform: translate(-50%, -50%) scale(1.1);
-}
-
-/* वॉल्यूम बटन स्टाइलिंग */
-.volume-button {
-  position: absolute;
-  bottom: 15px;
-  right: 15px;
-  background-color: rgba(255, 255, 255, 0.2); /* हल्का पारदर्शी सफेद */
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 45px;
-  height: 45px;
-  font-size: 1.2em;
-  display: flex;
   justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  z-index: 5;
-  backdrop-filter: blur(5px);
-}
-
-.volume-button:hover {
-  background-color: rgba(255, 255, 255, 0.4);
-}
-
-
-/* स्लाइडर नेविगेशन बटन (पिछला/अगला) */
-.slider-nav {
-  position: absolute;
-  top: 50%; /* बीच में */
-  width: 100%;
-  display: flex;
-  justify-content: space-between; /* बटनों के बीच जगह */
-  transform: translateY(-50%); /* बटन को लंबवत रूप से बीच में करें */
-  z-index: 10; /* वीडियो के ऊपर रहें */
-  padding: 0 10px; /* साइड पैडिंग */
-}
-
-.nav-button {
-  background-color: rgba(255, 255, 255, 0.25); /* हल्का पारदर्शी बैकग्राउंड */
-  border: none;
+  padding: 12px 25px;
+  border-radius: 30px; /* गोल कोने */
+  font-size: 1.1em;
+  font-weight: 600;
+  text-decoration: none;
   color: white;
-  font-size: 2.2em;
-  padding: 8px 15px;
-  border-radius: 50%; /* गोल बटन */
-  cursor: pointer; /* माउस पर हाथ का आइकन */
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  backdrop-filter: blur(5px); /* थोड़ा धुंधला प्रभाव */
+  transition: all 0.3s ease;
+  width: 100%; /* पूरी चौड़ाई लें */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* हल्का शैडो */
 }
 
-.nav-button:hover {
-  background-color: rgba(255, 255, 255, 0.5);
-  transform: translateY(-50%) scale(1.1); /* हॉवर पर थोड़ा बड़ा करें */
+.social-button i {
+  margin-right: 10px; /* आइकन और टेक्स्ट के बीच की दूरी */
+  font-size: 1.3em;
 }
 
-/* बटन (WhatsApp, Call Now) */
+.social-button.youtube {
+  background: linear-gradient(45deg, #FF0000, #CC0000); /* YouTube लाल */
+  border: 2px solid #FF0000;
+}
+
+.social-button.instagram {
+  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); /* Instagram ग्रेडिएंट */
+  border: 2px solid #dc2743;
+}
+
+.social-button:hover {
+  transform: translateY(-3px); /* होवर पर थोड़ा ऊपर उठें */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+}
+/* ---------------------------------------------------- */
+/* नए सोशल मीडिया बटन के लिए स्टाइल - यहाँ समाप्त */
+/* ---------------------------------------------------- */
+
+
+/* बटन (WhatsApp, Call Now) - ये आपके पहले से थे */
 .buttons {
   margin-top: 20px;
   display: flex;
@@ -314,9 +245,7 @@ a.call:hover {
     padding: 30px 15px;
     width: 95%;
   }
-  .video-slider-container {
-    max-width: 95%;
-  }
+  /* वीडियो स्लाइडर संबंधित मीडिया क्वेरी को हटाया गया */
   a.whatsapp, a.call, .booking-button {
     font-size: 1.1em;
     padding: 14px 25px;
@@ -351,8 +280,5 @@ a.call:hover {
   .booking-section p {
     font-size: 0.95em;
   }
-  .nav-button {
-      font-size: 1.8em;
-      padding: 3px 8px;
-  }
+  /* नेविगेशन बटन संबंधित मीडिया क्वेरी को हटाया गया */
 }
