@@ -6,6 +6,7 @@
   <title>Lazej DJ Meham</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
 
@@ -35,7 +36,6 @@
   </div>
 
   <script>
-    // **वीडियो के पाथ अब सीधे रूट से आएंगे, क्योंकि आपने वीडियो वहीं अपलोड किए हैं**
     const videoLinks = [
       "VID_20250713_082914.mp4", // आपके GitHub पर अपलोड किए गए वीडियो के नाम
       "VID_20250713_083117.mp4",
@@ -47,40 +47,98 @@
     const nextButton = document.querySelector('.next-button');
     let currentVideoIndex = 0;
 
-    // यह कोड वीडियो एलिमेंट्स बनाता है और उन्हें पेज पर जोड़ता है
     videoLinks.forEach(link => {
       const videoSlide = document.createElement('div');
       videoSlide.classList.add('dj-video-slide');
+
       const videoElement = document.createElement('video');
       videoElement.src = link;
-      videoElement.autoplay = false; // वीडियो अपने आप नहीं चलेगा जब तक यूजर क्लिक न करे
-      videoElement.muted = true; // वीडियो म्यूट रहेगा
-      videoElement.loop = true; // वीडियो खत्म होने पर फिर से चलेगा
+      videoElement.autoplay = false; // अब autoplay false रहेगा, यूजर मैन्युअल रूप से चलाएगा
+      videoElement.muted = true;   // वीडियो शुरू में म्यूट रहेगा
+      videoElement.loop = true;
       videoElement.playsInline = true; // मोबाइल पर भी पेज के अंदर ही चलेगा
+      videoElement.controls = false; // डिफॉल्ट ब्राउज़र कंट्रोल्स हटा दें, हम कस्टम प्ले बटन बनाएंगे
+
+      const playButton = document.createElement('button');
+      playButton.classList.add('play-button');
+      playButton.innerHTML = '<i class="fas fa-play"></i>'; // Font Awesome प्ले आइकन
+
+      const volumeButton = document.createElement('button');
+      volumeButton.classList.add('volume-button');
+      volumeButton.innerHTML = '<i class="fas fa-volume-mute"></i>'; // म्यूट आइकन
+
       videoSlide.appendChild(videoElement);
+      videoSlide.appendChild(playButton);
+      videoSlide.appendChild(volumeButton);
       videoWrapper.appendChild(videoSlide);
+
+      // प्ले बटन पर क्लिक हैंडलर
+      playButton.addEventListener('click', () => {
+        if (videoElement.paused) {
+          videoElement.play();
+          playButton.innerHTML = '<i class="fas fa-pause"></i>'; // प्ले होने पर पॉज़ आइकन
+          // अगर यूजर प्ले करता है, तो वॉल्यूम बटन पर भी क्लिक करके अनम्यूट कर सकता है
+          // यहाँ हम वॉल्यूम को अनम्यूट नहीं कर रहे हैं, ताकि यूजर को पूरा नियंत्रण मिले
+        } else {
+          videoElement.pause();
+          playButton.innerHTML = '<i class="fas fa-play"></i>'; // पॉज़ होने पर प्ले आइकन
+        }
+      });
+
+      // वॉल्यूम बटन पर क्लिक हैंडलर
+      volumeButton.addEventListener('click', () => {
+        if (videoElement.muted) {
+          videoElement.muted = false;
+          volumeButton.innerHTML = '<i class="fas fa-volume-up"></i>'; // अनम्यूट आइकन
+        } else {
+          videoElement.muted = true;
+          volumeButton.innerHTML = '<i class="fas fa-volume-mute"></i>'; // म्यूट आइकन
+        }
+      });
+
+      // वीडियो प्ले होने/पॉज होने पर प्ले बटन आइकन अपडेट करें
+      videoElement.addEventListener('play', () => {
+          playButton.innerHTML = '<i class="fas fa-pause"></i>';
+          playButton.style.display = 'none'; // वीडियो चलने पर प्ले बटन छुपाएं
+      });
+      videoElement.addEventListener('pause', () => {
+          playButton.innerHTML = '<i class="fas fa-play"></i>';
+          playButton.style.display = 'block'; // वीडियो पॉज़ होने पर प्ले बटन दिखाएं
+      });
+      videoElement.addEventListener('ended', () => { // वीडियो खत्म होने पर
+          playButton.innerHTML = '<i class="fas fa-play"></i>';
+          playButton.style.display = 'block';
+      });
     });
 
-    // सभी वीडियो एलिमेंट्स को सेलेक्ट करता है
-    const videos = document.querySelectorAll('.dj-video-slide video'); 
+    const videoSlides = document.querySelectorAll('.dj-video-slide');
+    const videos = document.querySelectorAll('.dj-video-slide video'); // सारे वीडियो एलिमेंट्स को सेलेक्ट करता है
+    const playButtons = document.querySelectorAll('.play-button');
+    const volumeButtons = document.querySelectorAll('.volume-button');
 
 
-    // यह फंक्शन सही वीडियो को दिखाता है और उसे प्ले करता है
     function showVideo(index) {
-        // पहले सारे वीडियो को रोकें और उन्हें शुरू से चलाएं
-        videos.forEach(vid => {
+        // पहले सारे वीडियो को रोकें, उन्हें शुरू से करें और प्ले/वॉल्यूम बटन को रीसेट करें
+        videos.forEach((vid, idx) => {
             vid.pause();
-            vid.currentTime = 0; // वीडियो को शुरू में रीसेट करें
+            vid.currentTime = 0;
+            vid.muted = true; // हमेशा म्यूटेड शुरू करें
+            volumeButtons[idx].innerHTML = '<i class="fas fa-volume-mute"></i>'; // म्यूट आइकन
+            playButtons[idx].innerHTML = '<i class="fas fa-play"></i>'; // प्ले आइकन
+            
+            // सिर्फ करंट वीडियो के प्ले/वॉल्यूम बटन दिखाएं
+            if (idx === index) {
+                playButtons[idx].style.display = 'block';
+                volumeButtons[idx].style.display = 'flex'; // flex ताकि icon बीच में आए
+            } else {
+                playButtons[idx].style.display = 'none';
+                volumeButtons[idx].style.display = 'none';
+            }
         });
 
-        // वीडियो-रैपर को सही वीडियो पर स्लाइड करें
+        // वीडियो-रैpper को सही वीडियो पर स्लाइड करें
         videoWrapper.style.transform = `translateX(-${index * 100}%)`;
 
-        // करंट वीडियो को चलाने की कोशिश करें (अगर ब्राउज़र अनुमति देता है)
-        videos[index].play().catch(error => {
-            console.log("वीडियो अपने आप नहीं चल पाया:", error);
-            // ब्राउज़र ऑटोप्ले को रोक सकता है। आपको स्लाइडर बटन पर क्लिक करना होगा।
-        });
         currentVideoIndex = index;
     }
 
