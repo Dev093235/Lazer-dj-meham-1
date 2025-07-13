@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lazej DJ Meham</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="overlay">
+    <h1>Lazej DJ Meham</h1>
+    <p>Feel the Beat, Rule the Night 🔥</p>
+
+    <div class="video-rotator">
+      <video class="dj-video" autoplay muted loop></video>
+    </div>
+
+    <div class="buttons">
+      <a class="whatsapp" href="https://wa.me/917988034346" target="_blank">💬 WhatsApp</a>
+      <a class="call" href="tel:+917988034346">📞 Call Now</a>
+    </div>
+  </div>
+
+  <script>
+    const videoLinks = [
+      "https://i.imgur.com/pdjsnlS.mp4",
+      "https://i.imgur.com/6hhyznI.mp4",
+      "https://i.imgur.com/FZaxya2.mp4"
+    ];
+
+    const videoElement = document.querySelector('.dj-video');
+    let currentVideo = 0;
+
+    function playNextVideo() {
+      videoElement.src = videoLinks[currentVideo];
+      videoElement.play();
+      currentVideo = (currentVideo + 1) % videoLinks.length;
+    }
+
+    videoElement.addEventListener('ended', playNextVideo);
+    playNextVideo();
+  </script>
+
+</body>
+</html>
