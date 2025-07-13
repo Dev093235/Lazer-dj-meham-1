@@ -35,10 +35,11 @@
   </div>
 
   <script>
+    // **वीडियो के पाथ अब सीधे रूट से आएंगे, क्योंकि आपने वीडियो वहीं अपलोड किए हैं**
     const videoLinks = [
-      "https://i.imgur.com/pdjsnlS.mp4", // वीडियो लिंक 1
-      "https://i.imgur.com/6hhyznI.mp4",  // वीडियो लिंक 2
-      "https://i.imgur.com/FZaxya2.mp4"   // वीडियो लिंक 3
+      "VID_20250713_082914.mp4", // आपके GitHub पर अपलोड किए गए वीडियो के नाम
+      "VID_20250713_083117.mp4",
+      "VID_20250713_083401.mp4"
     ];
 
     const videoWrapper = document.querySelector('.video-wrapper');
@@ -60,8 +61,9 @@
       videoWrapper.appendChild(videoSlide);
     });
 
-    const videoSlides = document.querySelectorAll('.dj-video-slide');
-    const videos = document.querySelectorAll('.dj-video'); // सारे वीडियो एलिमेंट्स को सेलेक्ट करता है
+    // सभी वीडियो एलिमेंट्स को सेलेक्ट करता है
+    const videos = document.querySelectorAll('.dj-video-slide video'); 
+
 
     // यह फंक्शन सही वीडियो को दिखाता है और उसे प्ले करता है
     function showVideo(index) {
@@ -77,7 +79,7 @@
         // करंट वीडियो को चलाने की कोशिश करें (अगर ब्राउज़र अनुमति देता है)
         videos[index].play().catch(error => {
             console.log("वीडियो अपने आप नहीं चल पाया:", error);
-            // यहाँ आप यूजर को वीडियो पर क्लिक करने के लिए कह सकते हैं
+            // ब्राउज़र ऑटोप्ले को रोक सकता है। आपको स्लाइडर बटन पर क्लिक करना होगा।
         });
         currentVideoIndex = index;
     }
